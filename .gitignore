@@ -1,0 +1,8 @@
+#Fichiers compilés
+*.class
+
+#Gradle dans /appli
+appli/.gradle
+appli/build
+appli/bin
+appli/.vscode
