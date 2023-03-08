@@ -1,4 +1,6 @@
 - remplissage de la table boucle = bornes DONE
 - remplissage de la table comptageVeloJour = données de tous les jours DONE
 
-- Remplissage de la table vacances (je sais pas si je peux curl une API qui contient les dates des vacances)
+- Remplissage de la table vacances (je sais pas si je peux curl une API qui contient les dates des vacances) DONE
+
+- Mise en place d'un wrapper pour lancer les 3 scripts depuis le même point

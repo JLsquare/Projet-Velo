@@ -13,6 +13,10 @@ if __name__ == '__main__':
     indexFin = zoneB.index("time datetime")
     fin = zoneB[indexFin+15:indexFin+25]
     # print(f"Fin : {fin}")
+
     
-    with open("vacances.sql","a") as f :
-        f.write(f"INSERT INTO Vacances VALUES (TO_DATE('YYYY-MM-DD','{debut}'),TO_DATE('YYYY-MM-DD','{fin}');")
+    with open("sql/vacances.sql","w") as f :
+        string = f"INSERT INTO Vacances VALUES (TO_DATE('{debut}','YYYY-MM-DD'),TO_DATE('{fin}','YYYY-MM-DD'));\n"
+        with open("sql/vacances.sql",'r') as read :
+            if string not in read.read() :
+                f.write(string)

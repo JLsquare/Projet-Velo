@@ -1,7 +1,7 @@
 #!/bin/python
 
 """
-Creee le script d'insertion dans la table Boucle a
+Cree le script d'insertion dans la table Boucle a
 partir du du fichier csv de geolocalisation des compteurs
 """
 
@@ -59,6 +59,6 @@ if __name__ == '__main__':
                 if k < nombreEltParLigne - 1:
                     insertion += ","
             insertion += ");"
-            with open("bornes.sql", "a") as bornes:
+            with open("sql/bornes.sql", "a") as bornes:
                 bornes.write(insertion + '\n')
 

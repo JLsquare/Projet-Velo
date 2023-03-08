@@ -35,12 +35,12 @@ if __name__ == '__main__':
     filename = sys.argv[1]
     TABLENAME = "ComptageVeloJour"
     try : 
-        os.remove("dailyData.sql")
-        print("dailyData.sql existant : Ecrasement ...")
+        os.remove(f"sql/{TABLENAME}.sql")
+        print(f"{TABLENAME}.sql existant : Ecrasement ...")
     except : 
-        print("dailyData inexistant : Creation ...")
+        print(f"{TABLENAME} inexistant : Creation ...")
 
-# read file
+    # read file
     with open(filename) as f:
         text = f.read().split("\n")[1:] # Split lines and remove the first one because it has column names
         nombreEltParLigne = len(text[0].split(SPLITON))
@@ -66,7 +66,7 @@ if __name__ == '__main__':
                 if k != 28:
                     insertion += ","
             insertion += ");"
-            with open("dailyData.sql", "a") as bornes:
+            with open(f"sql/{TABLENAME}.sql", "w") as bornes:
                 bornes.write(insertion + '\n')
 
-print("Success ! ")
+    print("Success ! ")

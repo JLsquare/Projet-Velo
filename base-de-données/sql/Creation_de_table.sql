@@ -11,9 +11,9 @@
 
 Vacances(dateDebut(1),dateFin(1))
 
-Boucle(idBoucle(1),Libelle,PositionLat,PositionLong)
+Borne(idBorne(1),Libelle,PositionLat,PositionLong)
 
-ComptageVeloJour(laBoucle(1) = @Boucle.idBoucle,leJour(1),h00,h01,h02,h03,h04,h05,h06,h07,h08,h09,h10,h11,h12,h13,h14,h15,h16,h17,h18,h19,h20,h21,h22,h23,probaErreur)
+ComptageVeloJour(laBorne(1) = @Borne.idBorne,leJour(1),h00,h01,h02,h03,h04,h05,h06,h07,h08,h09,h10,h11,h12,h13,h14,h15,h16,h17,h18,h19,h20,h21,h22,h23,probaErreur)
 
 */
 
@@ -31,9 +31,9 @@ CREATE TABLE Vacances (
   CONSTRAINT pk_Vacances PRIMARY KEY (dateDebut, dateFin)
 );
 
-CREATE TABLE Boucle (
-  idBoucle NUMBER 
-    CONSTRAINT pk_Boucle PRIMARY KEY,
+CREATE TABLE Borne (
+  idBorne NUMBER 
+    CONSTRAINT pk_Borne PRIMARY KEY,
   Libelle VARCHAR2(255),
   Observation VARCHAR2(255),
   PositionLat FLOAT,
@@ -45,8 +45,8 @@ CREATE TABLE Boucle (
 
 
 CREATE TABLE ComptageVeloJour (
-  laBoucle NUMBER 
-    CONSTRAINT fk_ComptageVeloJour_Boucle REFERENCES Boucle(idBoucle),
+  laBorne NUMBER 
+    CONSTRAINT fk_ComptageVeloJour_Borne REFERENCES Borne(idBorne),
   leJour DATE,
   h00 NUMBER 
     CONSTRAINT ck_0h CHECK (h00 >= 0),
@@ -98,5 +98,5 @@ CREATE TABLE ComptageVeloJour (
     CONSTRAINT ck_23h CHECK (h23 >= 0),
   probaErreur VARCHAR2(50) 
   CONSTRAINT ck_probaErreur CHECK (probaErreur IN ('Faible', 'Forte', NULL)),
-  CONSTRAINT pk_ComptageVeloJour PRIMARY KEY (laBoucle, leJour)
+  CONSTRAINT pk_ComptageVeloJour PRIMARY KEY (laBorne, leJour)
 );
