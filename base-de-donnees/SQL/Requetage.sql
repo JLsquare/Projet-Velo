@@ -63,10 +63,10 @@ WHERE longueurAmenagementCyclable > 20000;
 ---------[+]
 -- UNION  |
 ---------[+]
-------------------------------------------------------------------------------------------------------[+]
--- 1.Selectionner les dates de début des vacances de Noel et les jours entre le 10 et le 15 mars       |
---   2022                                                                                              |
-------------------------------------------------------------------------------------------------------[+]
+-------------------------------------------------------------------------------------------------[+]
+-- 1.Selectionner les dates de début des vacances de Noel et les jours entre le 10 et le 15 mars  |
+--   2022                                                                                         |
+-------------------------------------------------------------------------------------------------[+]
 
 SELECT dateDebut jours
 FROM VacancesZoneB
@@ -305,10 +305,10 @@ GROUP BY leCompteur;
  */
 
 
---------------------------------------------------------------------------------------------------[+]
--- 2. Selectionner la moyenne de temperature pour chaque vacance identifié par le nom des vacances |
---    (Trié par le nom des Vacances)
---------------------------------------------------------------------------------------------------[+]
+------------------------------------------------------------------------------------------[+]
+-- 2. Selectionner la moyenne de temperature pour chaque vacance identifié par le nom des  |
+--    vacances(Trié par le nom des Vacances)                                               |
+------------------------------------------------------------------------------------------[+]
 SELECT nomVacances, ROUND(AVG(temperatureMoyenne),2) moyenne
 FROM VacancesZoneB, Jour
 WHERE dateJour >= dateDebut AND dateJour <= dateFin
@@ -382,7 +382,8 @@ SELECT leCompteur
 FROM (
     SELECT * 
     FROM ComptageJour
-    WHERE leJour >= TO_DATE('2020-01-01','YYYY-MM-DD') AND leJour <= TO_DATE('2020-01-31','YYYY-MM-DD')
+    WHERE leJour >= TO_DATE('2020-01-01','YYYY-MM-DD') 
+        AND leJour <= TO_DATE('2020-01-31','YYYY-MM-DD')
     )
 GROUP by leCompteur
 HAVING COUNT(leJour) = 31;
