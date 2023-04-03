@@ -1,29 +1,40 @@
-----------------------------------------------------------------------------
--- SCRIPT DE CREATION DE LA BASE DE DONNÉES POUR LE PROJET VELO DE NANTES --
-----------------------------------------------------------------------------
+--------------------------------------------------------------------------[+]
+-- SCRIPT DE CREATION DE LA BASE DE DONNEES POUR LE PROJET VELO DE NANTES  |
+--------------------------------------------------------------------------[+]
 
+/**
+ * 
+ * Pubert Elise
+ * Esnault Gabin
+ * Da-Rocha Gatien
+ * Leborgne Néo
+ * 
+ * Gr : 1B1
+ * Deadline : 07 avril 2023
+ * 
+ */
 
-------------------------
--- SCHEMA RELATIONNEL --
-------------------------
+----------------------[+]
+-- SCHEMA RELATIONNEL  |
+----------------------[+]
 
 /*
 
 Quartier(idQuartier(1), nomQuartier, longueurAmenagementCyclable)
 
-Compteur(idCompteur(1), libelle, observations, latitude, longitude, leQuartier = @Quartier.idQuartier)
+Compteur(idCompteur(1), libelle, observation, latitude, longitude, leQuartier = @Quartier.idQuartier)
 
 Jour(date(1), temperatureMoyenne)
 
 VacancesZoneB(dateDebut(1)), dateFin, nomVacances)
 
-ComptageJour(unCompteur = Compteur.idCompteur (1), unJour = @Jour.date(1), h00,h01,h02,h03,h04,h05,h06,h07,h08,h09,h10,h11,h12,h13,h14,h15,h16,h17,h18,h19,h20,h21,h22,h23,probaErreur)
+ComptageJour(unCompteur = Compteur.idCompteur (1), unJour = @Jour.date(1), h00,h01,h02,h03,h04,h05,h06,h07,h08,h09,h10,h11,h12,h13,h14,h15,h16,h17,h18,h19,h20,h21,h22,h23,probabilitePresenceErreur)
 
 */
 
-------------------------
--- SCRIPT DE CREATION --
-------------------------
+---------------------[+]
+-- SCRIPT DE CREATION |
+---------------------[+]
 
 DROP TABLE ComptageJour;
 DROP TABLE Compteur;

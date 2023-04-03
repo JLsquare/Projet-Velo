@@ -1,13 +1,17 @@
+---------------------------------------------------------------------------[+]
+-- SCRIPT DE REQUETAGE DE LA BASE DE DONNEES POUR LE PROJET VELO DE NANTES  |
+---------------------------------------------------------------------------[+]
+
 /**
- * @project SAE 2.01 Partie Base de données
- * @deadline : 07 avril 2023
  * 
- * @author Leborgne Néo
- * @author Esnault Gabin
- * @author Pubert Elise
- * @author Da-Rocha Gatien
+ * Pubert Elise
+ * Esnault Gabin
+ * Da-Rocha Gatien
+ * Leborgne Néo
  * 
- * Groupe : 1B1
+ * Gr : 1B1
+ * Deadline : 07 avril 2023
+ * 
  */
 
 
@@ -38,8 +42,8 @@ WHERE observation IS NOT NULL;
 
 
 ----------------------------------------------------------------------------------[+]
--- 2.Selectionner les noms des quartiers et la longueur de l'aménagement cyclable  |
---   des quartiers dont l'aménagement cyclable est supérieur à 20 000m             |
+-- 2. Selectionner les noms des quartiers et la longueur de l'aménagement cyclable |
+--    des quartiers dont l'aménagement cyclable est supérieur à 20 000m            |
 ----------------------------------------------------------------------------------[+]
 
 SELECT nomQuartier, longueurAmenagementCyclable
@@ -67,7 +71,6 @@ WHERE longueurAmenagementCyclable > 20000;
 -- 1.Selectionner les dates de début des vacances de Noel et les jours entre le 10 et le 15 mars  |
 --   2022                                                                                         |
 -------------------------------------------------------------------------------------------------[+]
-
 SELECT dateDebut jours
 FROM VacancesZoneB
 WHERE UPPER(nomVacances) LIKE '%NOEL%'
