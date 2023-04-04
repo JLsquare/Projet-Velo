@@ -111,18 +111,19 @@ SELECT DISTINCT leCompteur
 FROM ComptageJour
 WHERE leJour = TO_DATE('2021-05-30', 'YYYY-MM-DD');
 
-/** 58 rows selected
+/** 10 rows selected.
  * IDCOMPTEUR
  * ----------
- * 89
- * 664
- * 665
- * 666
- * 667
- * 668
- * 669
- * 670
- * ...
+ *         89
+ *        699
+ *        700
+ *        701
+ *        889
+ *        907
+ *       1031
+ *       1032
+ *       1041
+ *       1042
  */
 
 
@@ -160,19 +161,22 @@ FROM ComptageJour
     JOIN Jour ON leJour = dateJour
 WHERE leCompteur = 665;
 
-/** 25 rows selected
- * LECOMPTEUR   DATEJOUR    TEMPERATUREMOYENNE
- * ----------   ---------   ------------------
- * 665          27-JAN-20   9.85
- * 665          26-JAN-20   7.58
- * 665          25-JAN-20   6.4
- * 665          24-JAN-20   3.52
- * 665          23-JAN-20   2.58
- * 665          22-JAN-20   3.2
- * 665          21-JAN-20   2.95
- * 665          20-JAN-20   4.93
+/** 1,109 rows selected.
+ * LECOMPTEUR DATEJOUR  TEMPERATUREMOYENNE
+ * ---------- --------- ------------------
+ *        665 24-JAN-23                2.6
+ *        665 23-JAN-23                 .8
+ *        665 22-JAN-23              -0.05
+ *        665 21-JAN-23                1.4
+ *        665 20-JAN-23               2.58
+ *        665 19-JAN-23               2.02
+ *        665 18-JAN-23                2.5
+ *        665 17-JAN-23               3.55
+ *        665 16-JAN-23                7.1
+ *        665 15-JAN-23               7.88
+ *        665 14-JAN-23               11.4
  * ...
-*/
+ */
 
 
 ----------------------------------[+]
@@ -183,7 +187,8 @@ WHERE leCompteur = 665;
 -----------------------------------------------[+]
 SELECT * 
 FROM (SELECT * 
-    FROM Jour 
+    FROM Jour
+    WHERE TemperatureMoyenne IS NOT NULL
     ORDER BY TemperatureMoyenne DESC)
 WHERE ROWNUM <= 40;
 
@@ -238,7 +243,7 @@ FROM Jour
 WHERE leCompteur = 672
 ORDER BY dateJour;
 
-/** 
+/** 1,109 rows selected.
  * DATEJOUR     NBPASSAGEDE8A12     TEMPERATUREMOYENNE
  * ---------    ---------------     ------------------
  * 01-JAN-20    -                   7.28
@@ -278,7 +283,7 @@ FROM ComptageJour;
 /**
  * ROUND(AVG(H10))
  * ---------------
- * 20
+ * 24
  */
 
 
@@ -321,17 +326,20 @@ WHERE dateJour >= dateDebut AND dateJour <= dateFin
 GROUP BY nomVacances
 ORDER BY nomVacances;
 
-/** 16 rows selected
- * NOMVACANCES  MOYENNE
- * -----------  -------
- * Ete 2020     20.73
- * Ete 2021     19.27
- * Ete 2022     23.36
- * Hiver 2020   9.29
- * Hiver 2021   9.38
- * Hiver 2022   8.18
- * Noel 2019    7.23
- * Noel 2020    6.28
+/** 19 rows selected
+ * NOMVACANCES                                           MOYENNE
+ * -------------------------------------------------- ----------
+ * Ete 2020                                                20.73
+ * Ete 2021                                                19.27
+ * Ete 2022                                                23.36
+ * Ete 2023
+ * Hiver 2020                                               9.29
+ * Hiver 2021                                               9.38
+ * Hiver 2022                                               8.18
+ * Hiver 2023
+ * Noel 2019                                                7.23
+ * Noel 2020                                                6.28
+ * Noel 2021                                                8.75
  * ...
  */
 
@@ -354,12 +362,20 @@ GROUP BY leCompteur
 HAVING COUNT(leJour) >= 30
 ORDER BY COUNT(leJour) DESC;
 
-/** 3 rows selected
- * LECOMPTEUR   COUNT(LEJOUR)
- * ----------   -------------
- * 680          36
- * 727          35
- * 677          35
+/** 14 rows selected
+ *  LECOMPTEUR COUNT(LEJOUR)
+ * ---------- -------------
+ *        727           282
+ *        677           156
+ *        980           156
+ *        680           145
+ *        682           115
+ *        683           115
+ *        744           110
+ *        674            90
+ *        675            86
+ *        672            42
+ *        679            40
  */
 
 
@@ -394,15 +410,20 @@ FROM (
 GROUP by leCompteur
 HAVING COUNT(leJour) = 31;
 
-/** 11 rows selected
+/** 48 rows selected
  * LECOMPTEUR
- * 666
- * 943
- * 890
- * 680
- * 743
- * 672
- * 683
+ * ----------
+ *        677
+ *        670
+ *        674
+ *        745
+ *        944
+ *        665
+ *        787
+ *        672
+ *        785
+ *        786
+ *        742
  * ...
  */
 
@@ -441,17 +462,20 @@ WHERE EXISTS (
     	AND UPPER(nomVacances) LIKE '%ETE%'
 );
 
-/** 168 rows selected
+/** 346 rows selected
  * DATEJOUR
  * ---------
- * 30-AUG-22
- * 29-AUG-22
- * 28-AUG-22
- * 27-AUG-22
- * 26-AUG-22
- * 25-AUG-22
- * 24-AUG-22
- * 23-AUG-22
+ * 31-DEC-23
+ * 30-DEC-23
+ * 29-DEC-23
+ * 28-DEC-23
+ * 27-DEC-23
+ * 26-DEC-23
+ * 25-DEC-23
+ * 24-DEC-23
+ * 23-DEC-23
+ * 22-DEC-23
+ * 21-DEC-23
  * ...
  */
 
