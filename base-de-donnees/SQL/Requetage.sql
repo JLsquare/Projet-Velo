@@ -14,12 +14,19 @@
  * 
  */
 
+/**
+ *  
+ * Pour cette SAE, nous avons d'abord commencé par utiliser Oracle Live SQl.
+ * Cependant, nous nous sommes rapidement confrontés à de nombreuses limites.
+ * Donc, nous avons migré vers SQL Developper qui se trouve être bien plus stable et complet.
+ *  
+ */
 
 -------------------------------[+]
 -- PROJECTION AVEC RESTRICTION  |
 -------------------------------[+]
 -----------------------------------------------------------------------------[+]
--- 1. Selectionner l'identifiant, le nom des compteur et les observation des  |
+-- 1. Sélectionner l'identifiant, le nom des compteur et les observation des  |
 --    compteurs qui ont une observation                                       |
 -----------------------------------------------------------------------------[+]
 
@@ -42,7 +49,7 @@ WHERE observation IS NOT NULL;
 
 
 ----------------------------------------------------------------------------------[+]
--- 2. Selectionner les noms des quartiers et la longueur de l'aménagement cyclable |
+-- 2. Sélectionner les noms des quartiers et la longueur de l'aménagement cyclable |
 --    des quartiers dont l'aménagement cyclable est supérieur à 20 000m            |
 ----------------------------------------------------------------------------------[+]
 
@@ -68,7 +75,7 @@ WHERE longueurAmenagementCyclable > 20000;
 -- UNION  |
 ---------[+]
 -------------------------------------------------------------------------------------------------[+]
--- 1.Selectionner les dates de début des vacances de Noel et les jours entre le 10 et le 15 mars  |
+-- 1.Sélectionner les dates de début des vacances de Noel et les jours entre le 10 et le 15 mars  |
 --   2022                                                                                         |
 -------------------------------------------------------------------------------------------------[+]
 SELECT dateDebut jours
@@ -122,8 +129,7 @@ WHERE leJour = TO_DATE('2021-05-30', 'YYYY-MM-DD');
  *        907
  *       1031
  *       1032
- *       1041
- *       1042
+ *        ...
  */
 
 
@@ -149,11 +155,12 @@ FROM Compteur
  * 787          Centre Ville
  * 788          Centre Ville
  * 700          Doulon - Bottiere
+ * ...          ...
  */
 
 
 -----------------------------------------------------------------------[+]
--- 2. Pour chaque comptage du compteur 665, selectionner l'identifiant  |
+-- 2. Pour chaque comptage du compteur 665, sélectionner l'identifiant  |
 --    du compteur, le jour du comptage et la température                |
 -----------------------------------------------------------------------[+]
 SELECT leCompteur, dateJour, temperatureMoyenne
@@ -172,19 +179,16 @@ WHERE leCompteur = 665;
  *        665 19-JAN-23               2.02
  *        665 18-JAN-23                2.5
  *        665 17-JAN-23               3.55
- *        665 16-JAN-23                7.1
- *        665 15-JAN-23               7.88
- *        665 14-JAN-23               11.4
- * ...
+ *        ...       ...                ...
  */
 
 
 ----------------------------------[+]
 -- TRI + LIMITATION (AVEC ROWNUM)  |
 ----------------------------------[+]
------------------------------------------------[+]
--- 1. Selectionner les 40 jours les plus chaud  |
------------------------------------------------[+]
+------------------------------------------------[+]
+-- 1. Sélectionner les 40 jours les plus chauds  |
+------------------------------------------------[+]
 SELECT * 
 FROM (SELECT * 
     FROM Jour
@@ -203,7 +207,7 @@ WHERE ROWNUM <= 40;
  * 11-AUG-20   27.8
  * 13-JUL-22   27.72
  * 17-JUN-22   27.62
- * ...
+ *       ...   ...
  */
 
 
@@ -211,7 +215,7 @@ WHERE ROWNUM <= 40;
 -- JOINTURE EXTERNE  |
 --------------------[+]
 --------------------------------------------------------------------------------------[+]
--- 1. Pour chaque quartier, selectionner les compteurs qu'il possède (peut-être null)  |
+-- 1. Pour chaque quartier, sélectionner les compteurs qu'il possède (peut-être null)  |
 --------------------------------------------------------------------------------------[+]
 SELECT nomQuartier, idCompteur
 FROM Quartier
@@ -229,12 +233,12 @@ ORDER BY nomQuartier;
  * Centre Ville                         666
  * Centre Ville                         665
  * Centre Ville                         744
- * ...
+ * ...                                  ...
  */
 
 
 ------------------------------------------------------------------------------------------[+]
--- 2. Pour chaque jour, selectionner le nombre de passage entre 8h et 12h du compteur 672  |
+-- 2. Pour chaque jour, sélectionner le nombre de passage entre 8h et 12h du compteur 672  |
 --    et la temperature (peut-être null) trié du jour le plus ancien au plus récent        |                                                               --
 ------------------------------------------------------------------------------------------[+]
 SELECT dateJour, h08 + h09 + h10 + h11 nbPassageDe8a12, temperatureMoyenne
@@ -254,7 +258,7 @@ ORDER BY dateJour;
  * 06-JAN-20    -                   4.32
  * 07-JAN-20    -                   10.4
  * 08-JAN-20    -                   11.98
- * ...
+ * ...          ...                 ...
  */
 
 
@@ -262,7 +266,7 @@ ORDER BY dateJour;
 -- FONCTION DE GROUPE SANS REGROUPEMENT  |
 ----------------------------------------[+]
 ---------------------------------------------------------------------[+]
--- 1. Selectionner la temperature moyenne la plus chaude enregistrée  |
+-- 1. Sélectionner la temperature moyenne la plus chaude enregistrée  |
 ---------------------------------------------------------------------[+]
 SELECT MAX(temperatureMoyenne)
 FROM Jour;
@@ -275,7 +279,7 @@ FROM Jour;
 
  
 ----------------------------------------------------------------------------------------------[+]
--- 2. Selectionner la moyenne de nombre de passage entre 10h et 11h  (arrondi à l'unité près)  |
+-- 2. Sélectionner la moyenne de nombre de passage entre 10h et 11h  (arrondi à l'unité près)  |
 ----------------------------------------------------------------------------------------------[+]
 SELECT ROUND(AVG(h10))
 FROM ComptageJour;
@@ -309,15 +313,12 @@ GROUP BY leCompteur;
  *        944         234822
  *        742        1028058
  *        670         302391
- *        672         609614
- *        674         508966
- *        677         313416
- * ...
+ *        ...            ...
  */
 
 
 ------------------------------------------------------------------------------------------[+]
--- 2. Selectionner la moyenne de temperature pour chaque vacance identifié par le nom des  |
+-- 2. Sélectionner la moyenne de temperature pour chaque vacance identifié par le nom des  |
 --    vacances(Trié par le nom des Vacances)                                               |
 ------------------------------------------------------------------------------------------[+]
 SELECT nomVacances, ROUND(AVG(temperatureMoyenne),2) moyenne
@@ -327,20 +328,16 @@ GROUP BY nomVacances
 ORDER BY nomVacances;
 
 /** 19 rows selected
- * NOMVACANCES                                           MOYENNE
- * -------------------------------------------------- ----------
- * Ete 2020                                                20.73
- * Ete 2021                                                19.27
- * Ete 2022                                                23.36
+ * NOMVACANCES  MOYENNE
+ * ----------- ----------
+ * Ete 2020     20.73
+ * Ete 2021     19.27
+ * Ete 2022     23.36
  * Ete 2023
- * Hiver 2020                                               9.29
- * Hiver 2021                                               9.38
- * Hiver 2022                                               8.18
- * Hiver 2023
- * Noel 2019                                                7.23
- * Noel 2020                                                6.28
- * Noel 2021                                                8.75
- * ...
+ * Hiver 2020    9.29
+ * Hiver 2021    9.38
+ * Hiver 2022    8.18
+ * ...            ...
  */
 
 
@@ -348,7 +345,7 @@ ORDER BY nomVacances;
 -- REGROUPEMENT ET RESTRICTION (HAVING)  |
 ----------------------------------------[+]
 -------------------------------------------------------------------------------------------------[+]
--- 1. Selectionner les compteurs qui ont eu au moins 30 fois une anomalie "Forte" et le nombre    |
+-- 1. Sélectionner les compteurs qui ont eu au moins 30 fois une anomalie "Forte" et le nombre    |
 --    de fois qu'ils ont reçu ce type de probabilité d'anomalie (Trié par ce nombre (décroissant))|
 -------------------------------------------------------------------------------------------------[+]
 
@@ -363,8 +360,8 @@ HAVING COUNT(leJour) >= 30
 ORDER BY COUNT(leJour) DESC;
 
 /** 14 rows selected
- *  LECOMPTEUR COUNT(LEJOUR)
- * ---------- -------------
+ *  LECOMPTEUR  COUNT(LEJOUR)
+ *  ----------  -------------
  *        727           282
  *        677           156
  *        980           156
@@ -372,15 +369,12 @@ ORDER BY COUNT(leJour) DESC;
  *        682           115
  *        683           115
  *        744           110
- *        674            90
- *        675            86
- *        672            42
- *        679            40
+ *        ...           ...
  */
 
 
 ------------------------------------------------------------------[+]
--- 2. Selectionner le nombre de compteur avec et sans observation  |
+-- 2. Sélectionner le nombre de compteur avec et sans observation  |
 ------------------------------------------------------------------[+]
 SELECT observation, COUNT(idCompteur)
 FROM Compteur
@@ -421,10 +415,7 @@ HAVING COUNT(leJour) = 31;
  *        665
  *        787
  *        672
- *        785
- *        786
- *        742
- * ...
+ *        ...
  */
 
 
@@ -432,7 +423,7 @@ HAVING COUNT(leJour) = 31;
 -- TEST DES VALEURS (IN / NOT IN)  |
 ----------------------------------[+]
 ----------------------------------------------------------------------------------------------[+]
--- 1. Selectionner les dates de début et de fin des vacances de Noel 2021 et de printemps 2022 |
+-- 1. Sélectionner les dates de début et de fin des vacances de Noel 2021 et de printemps 2022 |
 ----------------------------------------------------------------------------------------------[+]
 SELECT dateDebut, dateFin
 FROM VacancesZoneB
@@ -450,7 +441,7 @@ WHERE upper(nomVacances) IN ('NOEL 2021','PRINTEMPS 2022');
 -- TEXT D'EXISTENCE (EXISTS / NOT EXISTS)  |
 ------------------------------------------[+]
 ----------------------------------------------[+]
--- 1.Selectionner les jours de vacances d'été  |
+-- 1.Sélectionner les jours de vacances d'été  |
 ----------------------------------------------[+]
 SELECT * 
 FROM Jour
@@ -473,9 +464,6 @@ WHERE EXISTS (
  * 26-DEC-23
  * 25-DEC-23
  * 24-DEC-23
- * 23-DEC-23
- * 22-DEC-23
- * 21-DEC-23
  * ...
  */
 
